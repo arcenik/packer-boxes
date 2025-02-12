@@ -51,10 +51,10 @@
       "headless": true,
       "http_directory": "http",
       "iso_urls": [
-        "debian-9.13.0-amd64-netinst.iso",
-        "https://cdimage.debian.org/cdimage/archive/9.13.0/amd64/iso-cd/debian-9.13.0-amd64-netinst.iso"
+        "debian-12.9.0-amd64-netinst.iso",
+        "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.9.0-amd64-netinst.iso"
       ],
-      "iso_checksum": "sha256:71c7e9eb292acc880f84605b1ca2b997f25737fe0a43fc9586f61d35cd2eb43b",
+      "iso_checksum": "sha256:1257373c706d8c07e6917942736a865dfff557d21d76ea3040bb1039eb72a054",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -62,7 +62,7 @@
       "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "packer-debian-9-amd64",
+      "vm_name": "packer-debian-11-amd64",
       "vboxmanage": [
         [
           "modifyvm",
@@ -82,12 +82,12 @@
   "post-processors": [
     [
       {
-        "output": "builds/{{.Provider}}-debian9.box",
+        "output": "builds/{{.Provider}}-debian12.box",
         "type": "vagrant"
       },
       {
         "type": "vagrant-cloud",
-        "box_tag": "geerlingguy/debian9",
+        "box_tag": "geerlingguy/debian12",
         "version": "{{user `version`}}"
       }
     ]

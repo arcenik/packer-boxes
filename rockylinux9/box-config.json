@@ -31,10 +31,10 @@
       "headless": true,
       "http_directory": "http",
       "iso_urls": [
-        "Rocky-x86_64-minimal.iso",
-        "https://download.rockylinux.org/pub/rocky/8.10/isos/x86_64/Rocky-x86_64-minimal.iso"
+        "Rocky-9.5-x86_64-minimal.iso",
+        "https://download.rockylinux.org/pub/rocky/9.5/isos/x86_64/Rocky-9.5-x86_64-minimal.iso"
       ],
-      "iso_checksum": "sha256:2c735d3b0de921bd671a0e2d08461e3593ac84f64cdaef32e3ed56ba01f74f4b",
+      "iso_checksum": "sha256:eedbdc2875c32c7f00e70fc861edef48587c7cbfd106885af80bdf434543820b",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -62,7 +62,7 @@
   "post-processors": [
     [
       {
-        "output": "builds/{{.Provider}}-rockylinux8.box",
+        "output": "builds/{{.Provider}}-rockylinux9.box",
         "type": "vagrant"
       },
       {

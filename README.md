@@ -6,8 +6,10 @@ This project contains the Packer build configurations for all of Jeff Geerling's
 
   - [geerlingguy/ubuntu2004](https://app.vagrantup.com/geerlingguy/boxes/ubuntu2004) - [`ubuntu2004` directory](ubuntu2004/)
   - [geerlingguy/ubuntu1804](https://app.vagrantup.com/geerlingguy/boxes/ubuntu1804) - [`ubuntu1804` directory](ubuntu1804/)
+  - [geerlingguy/rockylinux9](https://app.vagrantup.com/geerlingguy/boxes/rockylinux9) - [`rockylinux9` directory](rockylinux9/)
   - [geerlingguy/rockylinux8](https://app.vagrantup.com/geerlingguy/boxes/rockylinux8) - [`rockylinux8` directory](rockylinux8/)
   - [geerlingguy/centos7](https://app.vagrantup.com/geerlingguy/boxes/centos7) - [`centos7` directory](centos7/)
+  - [geerlingguy/debian12](https://app.vagrantup.com/geerlingguy/boxes/debian12) - [`debian12` directory](debian12/)
   - [geerlingguy/debian11](https://app.vagrantup.com/geerlingguy/boxes/debian11) - [`debian11` directory](debian11/)
   - [geerlingguy/debian10](https://app.vagrantup.com/geerlingguy/boxes/debian10) - [`debian10` directory](debian10/)
   - [geerlingguy/debian9](https://app.vagrantup.com/geerlingguy/boxes/debian9) - [`debian9` directory](debian9/)
