@@ -1,0 +1,104 @@
+{
+  "variables": {
+    "hcp_client_id": "{{ env `HCP_CLIENT_ID` }}",
+    "hcp_client_secret": "{{ env `HCP_CLIENT_SECRET` }}",
+    "version": "1.0.${formatdate('YYYY-MM-DD-hhmmss', timestamp())}",
+    "architecture": "arm64"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -SEH bash -x '{{.Path}}'",
+      "script": "scripts/ansible.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -SEH bash -x '{{.Path}}'",
+      "script": "scripts/setup.sh"
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "../shared/main.yml",
+      "galaxy_file": "../shared/requirements.yml"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -SEH bash -x '{{.Path}}'",
+      "script": "scripts/cleanup.sh"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<enter><wait>",
+        "e<down><down><down><end>",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+        "debian-installer=en_US.UTF-8 ",
+        "auto ",
+        "locale=en_US.UTF-8 ",
+        "kbd-chooser/method=us ",
+        "keyboard-configuration/xkb-keymap=us ",
+        "netcfg/get_hostname={{ .Name }} ",
+        "netcfg/get_domain=vagrantup.com ",
+        "fb=false ",
+        "debconf/frontend=noninteractive ",
+        "console-setup/ask_detect=false ",
+        "console-keymaps-at/keymap=us ",
+        "grub-installer/bootdev=/dev/sda ",
+        "<f10>"
+      ],
+      "boot_wait": "5s",
+      "disk_size": 81920,
+      "guest_os_type": "Debian12_arm64",
+      "headless": false,
+      "hard_drive_interface":"virtio",
+      "iso_interface":"virtio",
+      "http_directory": "http",
+      "iso_urls": [
+        "debian-12.9.0-arm64-netinst.iso",
+        "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-12.9.0-arm64-netinst.iso"
+      ],
+      "iso_checksum": "sha256:98b41e276dc41478c43298ee149f05ad446aa736273aaa653a39d64dab65a6a4",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "1800s",
+      "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "packer-debian-12-arm64",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--firmware", "efi" ],
+        [ "modifyvm", "{{.Name}}", "--ioapic", "on" ],
+        [ "modifyvm", "{{.Name}}", "--usb-xhci", "on" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "21" ],
+        [ "modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga" ],
+        [ "modifyvm", "{{.Name}}", "--chipset", "armv8virtual" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ],
+        [ "modifyvm", "{{.Name}}", "--boot1", "disk" ],
+        [ "modifyvm", "{{.Name}}", "--boot2", "dvd" ],
+        [ "modifyvm", "{{.Name}}", "--boot3", "none" ],
+        [ "modifyvm", "{{.Name}}", "--boot4", "none" ],
+        [ "storagectl", "{{.Name}}", "--name" , "IDE Controller" , "--remove" ]
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "output": "builds/{{.Provider}}-debian12-arm64.box",
+        "type": "vagrant"
+      },
+      {
+        "type": "vagrant-registry",
+        "box_tag": "francois75/debian12-arm64",
+        "client_id": "{{user `hcp_client_id`}}",
+        "client_secret": "{{user `hcp_client_secret`}}",
+        "version": "{{user `version`}}",
+        "architecture": "{{user `architecture`}}"
+      }
+    ]
+  ]
+}
