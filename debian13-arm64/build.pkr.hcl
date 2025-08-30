@@ -23,11 +23,11 @@ build {
 
   post-processors {
     post-processor "vagrant" {
-      output = "builds/{{ .Provider }}-debian12-arm64.box"
+      output = "builds/{{ .Provider }}-debian13-arm64.box"
     }
     post-processor "vagrant-registry" {
       architecture  = "${var.architecture}"
-      box_tag       = "francois75/debian12-arm64"
+      box_tag       = "francois75/debian13-arm64"
       client_id     = "${var.hcp_client_id}"
       client_secret = "${var.hcp_client_secret}"
       version       = "${local.version}"
